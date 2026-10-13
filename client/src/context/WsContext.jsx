@@ -14,7 +14,8 @@ export function WsProvider({ children }) {
 
     function connect() {
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const wsUrl = `${protocol}//${window.location.host}/ws`;
+      const host = window.location.port === '5173' ? `${window.location.hostname}:5000` : window.location.host;
+      const wsUrl = `${protocol}//${host}/ws`;
 
       ws = new WebSocket(wsUrl);
       wsRef.current = ws;

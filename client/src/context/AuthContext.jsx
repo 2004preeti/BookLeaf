@@ -9,12 +9,22 @@ export function AuthProvider({ children }) {
   const [personas, setPersonas] = useState([]);
   const [loading, setLoading] = useState(true);
 
+async function safeJson(res) {
+  const text = await res.text();
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    return null;
+  }
+}
+
   // Fetch personas for demo switcher
   useEffect(() => {
     fetch('/api/auth/personas')
-      .then(res => res.json())
+      .then(safeJson)
       .then(data => {
-        if (data.personas) {
+        if (data && data.personas) {
           setPersonas(data.personas);
         }
       })
@@ -27,9 +37,11 @@ export function AuthProvider({ children }) {
       fetch('/api/auth/me', {
         headers: { Authorization: `Bearer ${token}` }
       })
-        .then(res => {
+        .then(async res => {
           if (!res.ok) throw new Error('Token expired');
-          return res.json();
+          const data = await safeJson(res);
+          if (!data) throw new Error('Invalid JSON response');
+          return data;
         })
         .then(data => {
           setUser(data.user);
@@ -53,8 +65,8 @@ export function AuthProvider({ children }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ author_id: 'AUTH001' })
       });
-      const data = await res.json();
-      if (data.token) {
+      const data = await safeJson(res);
+      if (data && data.token) {
         localStorage.setItem('bookleaf_token', data.token);
         setToken(data.token);
         setUser(data.user);
@@ -72,9 +84,9 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || 'Login failed');
+    const data = await safeJson(res);
+    if (!res.ok || !data) {
+      throw new Error((data && data.error) || 'Login failed');
     }
     localStorage.setItem('bookleaf_token', data.token);
     setToken(data.token);
@@ -90,8 +102,8 @@ export function AuthProvider({ children }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ author_id })
       });
-      const data = await res.json();
-      if (data.token) {
+      const data = await safeJson(res);
+      if (data && data.token) {
         localStorage.setItem('bookleaf_token', data.token);
         setToken(data.token);
         setUser(data.user);
