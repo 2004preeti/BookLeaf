@@ -69,6 +69,7 @@ function MainApp() {
         <TopBar
           currentView={currentView}
           onTogglePortal={handleTogglePortal}
+          onOpenApiDocs={() => setShowApiDocs(true)}
         />
 
         <main style={{ flex: 1, overflowY: 'auto' }}>
