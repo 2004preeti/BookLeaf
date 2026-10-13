@@ -13,49 +13,49 @@ export function MetricsBar({ stats }) {
       marginBottom: '24px'
     }}>
       {/* Total Tickets */}
-      <div className="glass-card" style={{ padding: '16px' }}>
+      <div className="glass-card" style={{ padding: '16px', background: '#ffffff' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>
             Queue Total
           </span>
           <Inbox size={16} color="var(--text-muted)" />
         </div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+        <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>
           {overview.total_tickets || 0}
         </div>
-        <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+        <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '2px', fontWeight: 500 }}>
           Across {overview.total_authors || 10} authors
         </div>
       </div>
 
       {/* Open Tickets */}
-      <div className="glass-card" style={{ padding: '16px' }}>
+      <div className="glass-card" style={{ padding: '16px', background: '#ffffff' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <span style={{ fontSize: '0.78rem', color: '#93c5fd', fontWeight: 600, textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--blue-700)', fontWeight: 700, textTransform: 'uppercase' }}>
             Awaiting Action
           </span>
-          <Clock size={16} color="#60a5fa" />
+          <Clock size={16} color="var(--blue-600)" />
         </div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#93c5fd' }}>
+        <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--blue-700)' }}>
           {overview.open_tickets || 0}
         </div>
-        <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+        <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '2px', fontWeight: 500 }}>
           Unresolved incoming
         </div>
       </div>
 
       {/* In Progress */}
-      <div className="glass-card" style={{ padding: '16px' }}>
+      <div className="glass-card" style={{ padding: '16px', background: '#ffffff' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <span style={{ fontSize: '0.78rem', color: '#d8b4fe', fontWeight: 600, textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--purple-700)', fontWeight: 700, textTransform: 'uppercase' }}>
             In Progress
           </span>
-          <AlertCircle size={16} color="#c084fc" />
+          <AlertCircle size={16} color="var(--purple-600)" />
         </div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#d8b4fe' }}>
+        <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--purple-700)' }}>
           {overview.in_progress || 0}
         </div>
-        <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+        <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '2px', fontWeight: 500 }}>
           Under investigation
         </div>
       </div>
@@ -63,51 +63,51 @@ export function MetricsBar({ stats }) {
       {/* Critical Active */}
       <div className="glass-card" style={{
         padding: '16px',
-        border: overview.critical_active > 0 ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid var(--border-subtle)',
-        background: overview.critical_active > 0 ? 'rgba(239, 68, 68, 0.08)' : 'var(--bg-card)'
+        border: overview.critical_active > 0 ? '1px solid rgba(225, 29, 72, 0.4)' : '1px solid var(--border-subtle)',
+        background: overview.critical_active > 0 ? 'var(--rose-50)' : '#ffffff'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <span style={{ fontSize: '0.78rem', color: '#f87171', fontWeight: 600, textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--rose-700)', fontWeight: 700, textTransform: 'uppercase' }}>
             Critical SLA
           </span>
-          <ShieldAlert size={16} color="#ef4444" />
+          <ShieldAlert size={16} color="var(--rose-600)" />
         </div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#f87171' }}>
+        <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--rose-700)' }}>
           {overview.critical_active || 0}
         </div>
-        <div style={{ fontSize: '0.72rem', color: '#fca5a5', marginTop: '2px' }}>
+        <div style={{ fontSize: '0.74rem', color: 'var(--rose-700)', marginTop: '2px', fontWeight: 600 }}>
           Requires 24-48h resolution
         </div>
       </div>
 
       {/* Overdue (>24h) */}
-      <div className="glass-card" style={{ padding: '16px' }}>
+      <div className="glass-card" style={{ padding: '16px', background: '#ffffff' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <span style={{ fontSize: '0.78rem', color: '#fbbf24', fontWeight: 600, textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--amber-700)', fontWeight: 700, textTransform: 'uppercase' }}>
             Age &gt; 24h
           </span>
-          <Clock size={16} color="#f59e0b" />
+          <Clock size={16} color="var(--amber-600)" />
         </div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fbbf24' }}>
+        <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--amber-700)' }}>
           {overview.overdue_count || 0}
         </div>
-        <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+        <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '2px', fontWeight: 500 }}>
           Escalation threshold
         </div>
       </div>
 
       {/* Resolved / Closed */}
-      <div className="glass-card" style={{ padding: '16px' }}>
+      <div className="glass-card" style={{ padding: '16px', background: '#ffffff' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--emerald-400)', fontWeight: 600, textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--emerald-700)', fontWeight: 700, textTransform: 'uppercase' }}>
             Resolved
           </span>
-          <CheckCircle2 size={16} color="var(--emerald-400)" />
+          <CheckCircle2 size={16} color="var(--emerald-600)" />
         </div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--emerald-400)' }}>
+        <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--emerald-700)' }}>
           {(overview.resolved || 0) + (overview.closed || 0)}
         </div>
-        <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+        <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '2px', fontWeight: 500 }}>
           Successfully closed
         </div>
       </div>

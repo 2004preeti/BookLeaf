@@ -53,7 +53,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
 
   if (!ticketId) {
     return (
-      <div className="glass-card" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>
+      <div className="glass-card" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', background: '#ffffff' }}>
         Select a ticket from the queue on the left to start processing.
       </div>
     );
@@ -61,8 +61,8 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
 
   if (loading || !data) {
     return (
-      <div className="glass-card" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'var(--emerald-400)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div className="glass-card" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#ffffff' }}>
+        <div style={{ color: 'var(--emerald-700)', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600 }}>
           <Sparkles className="animate-spin" size={20} />
           <span>Loading ticket details & AI context...</span>
         </div>
@@ -156,44 +156,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
     }
   };
 
-  // Handle Regenerate AI Draft
-  const handleRegenerateDraft = async () => {
-    setIsRegenerating(true);
-    try {
-      const res = await fetch('/api/ai/regenerate-draft', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('bookleaf_token')}`
-        },
-        body: JSON.stringify({
-          ticket_id: ticket.id,
-          custom_instruction: customGuidance.trim()
-        })
-      });
-
-      const resData = await res.json();
-      if (res.ok) {
-        setData(prev => ({
-          ...prev,
-          ticket: {
-            ...prev.ticket,
-            ai_draft_response: resData.draft,
-            ai_reasoning: resData.reasoning
-          }
-        }));
-        setReplyMessage(resData.draft);
-        setShowRegenModal(false);
-        setCustomGuidance('');
-      }
-    } catch (err) {
-      console.error('Regenerate error:', err);
-    } finally {
-      setIsRegenerating(false);
-    }
-  };
-
-  // Handle Post Message (Reply or Internal Note)
+  // Handle Send Message (Public Reply or Internal Note)
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!replyMessage.trim()) return;
@@ -209,25 +172,61 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
         body: JSON.stringify({
           message: replyMessage.trim(),
           is_internal_note: isInternalNote,
-          update_status: !isInternalNote && ticket.status === 'Open' ? 'In Progress' : undefined
+          update_status: isInternalNote ? undefined : (ticket.status === 'Open' ? 'In Progress' : undefined)
         })
       });
 
       const resData = await res.json();
       if (res.ok) {
-        setData(prev => ({
-          ...prev,
-          ticket: { ...prev.ticket, status: resData.ticket_status },
-          messages: [...prev.messages, resData.message]
-        }));
         setReplyMessage('');
         setIsInternalNote(false);
-        onTicketUpdated({ ...ticket, status: resData.ticket_status });
+        fetchTicketDetails();
+        if (resData.ticket_status) {
+          setData(prev => ({ ...prev, ticket: { ...prev.ticket, status: resData.ticket_status } }));
+          onTicketUpdated({ ...ticket, status: resData.ticket_status });
+        }
       }
     } catch (err) {
-      console.error('Failed to send message:', err);
+      console.error('Failed to post message:', err);
     } finally {
       setIsSending(false);
+    }
+  };
+
+  // Handle AI Draft Regeneration
+  const handleRegenerateDraft = async () => {
+    setIsRegenerating(true);
+    try {
+      const res = await fetch('/api/ai/regenerate-draft', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('bookleaf_token')}`
+        },
+        body: JSON.stringify({
+          ticket_id: ticket.id,
+          custom_instruction: customGuidance.trim() || undefined
+        })
+      });
+
+      const resData = await res.json();
+      if (res.ok && resData.draft) {
+        setData(prev => ({
+          ...prev,
+          ticket: {
+            ...prev.ticket,
+            ai_draft_response: resData.draft,
+            ai_reasoning: resData.reasoning || prev.ticket.ai_reasoning
+          }
+        }));
+        setReplyMessage(resData.draft);
+        setShowRegenModal(false);
+        setCustomGuidance('');
+      }
+    } catch (err) {
+      console.error('Failed to regenerate draft:', err);
+    } finally {
+      setIsRegenerating(false);
     }
   };
 
@@ -243,12 +242,12 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
   const priorities = ['Critical', 'High', 'Medium', 'Low'];
 
   return (
-    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#ffffff' }}>
       {/* 1. Header Toolbar */}
       <div style={{
         padding: '16px 22px',
         borderBottom: '1px solid var(--border-subtle)',
-        background: 'rgba(255, 255, 255, 0.02)',
+        background: 'var(--bg-canvas)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -256,7 +255,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
         gap: '12px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.05rem', fontWeight: 800, color: 'var(--emerald-400)' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.05rem', fontWeight: 800, color: 'var(--emerald-700)' }}>
             {ticket.ticket_number}
           </span>
 
@@ -267,13 +266,14 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                 key={s}
                 onClick={() => handleUpdateStatus(s)}
                 style={{
-                  padding: '4px 10px',
+                  padding: '5px 12px',
                   borderRadius: '6px',
                   fontSize: '0.75rem',
-                  fontWeight: 600,
-                  background: ticket.status === s ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.04)',
-                  color: ticket.status === s ? '#fff' : 'var(--text-muted)',
-                  border: ticket.status === s ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid var(--border-subtle)'
+                  fontWeight: 700,
+                  background: ticket.status === s ? 'var(--emerald-50)' : '#ffffff',
+                  color: ticket.status === s ? 'var(--emerald-800)' : 'var(--text-muted)',
+                  border: ticket.status === s ? '1px solid var(--emerald-600)' : '1px solid var(--border-subtle)',
+                  boxShadow: ticket.status === s ? 'var(--shadow-sm)' : 'none'
                 }}
               >
                 {s}
@@ -284,15 +284,16 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
 
         {/* Assignment Action */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-            Assigned: <strong style={{ color: '#fff' }}>{ticket.assigned_to || 'Unassigned'}</strong>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            Assigned: <strong style={{ color: 'var(--text-main)' }}>{ticket.assigned_to || 'Unassigned'}</strong>
           </span>
           <button
             onClick={handleAssignToMe}
             className="btn-secondary"
-            style={{ padding: '4px 10px', fontSize: '0.75rem' }}
+            style={{ padding: '5px 12px', fontSize: '0.75rem' }}
           >
-            <Shield size={12} /> Assign to Me
+            <Shield size={13} color="var(--blue-600)" />
+            <span>Assign to Me</span>
           </button>
         </div>
       </div>
@@ -300,20 +301,20 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
       {/* 2. Middle Body: Split into Workbench Columns */}
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 340px', overflow: 'hidden' }}>
         {/* Left Sub-Column: Query, Messages Thread & Response Studio */}
-        <div style={{ display: 'flex', flexDirection: 'column', borderRight: '1px solid var(--border-subtle)', overflowY: 'auto', padding: '20px 24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', borderRight: '1px solid var(--border-subtle)', overflowY: 'auto', padding: '20px 24px', background: '#ffffff' }}>
           {/* Ticket Subject & Original Query */}
           <div style={{ marginBottom: '20px' }}>
-            <h2 style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '8px' }}>
+            <h2 style={{ fontSize: '1.35rem', color: 'var(--text-main)', fontWeight: 800, marginBottom: '8px' }}>
               {ticket.subject}
             </h2>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '12px' }}>
               <span>Submitted by <strong style={{ color: 'var(--text-main)' }}>{ticket.author_name}</strong></span>
               <span>•</span>
               <span>{new Date(ticket.created_at).toLocaleString()}</span>
               {ticket.attachment_name && (
                 <>
                   <span>•</span>
-                  <span style={{ color: '#93c5fd', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ color: 'var(--blue-700)', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
                     <Paperclip size={13} /> {ticket.attachment_name}
                   </span>
                 </>
@@ -323,25 +324,26 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
 
           {/* AI Auto-Generated Draft Recommendation Card */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 78, 59, 0.2) 100%)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
+            background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
+            border: '1px solid #a7f3d0',
             borderRadius: 'var(--radius-lg)',
-            padding: '16px 20px',
-            marginBottom: '20px'
+            padding: '18px 20px',
+            marginBottom: '22px',
+            boxShadow: 'var(--shadow-sm)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div style={{
-                  padding: '4px',
+                  padding: '5px',
                   borderRadius: '6px',
-                  background: 'var(--emerald-glow)',
-                  color: 'var(--emerald-400)',
+                  background: 'var(--emerald-100)',
+                  color: 'var(--emerald-800)',
                   display: 'flex'
                 }}>
                   <Sparkles size={16} />
                 </div>
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>
-                  AI-Drafted Response (BookLeaf Knowledge Base Powered)
+                <span style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--emerald-900)' }}>
+                  AI-Drafted Response (BookLeaf Knowledge Base Grounded)
                 </span>
               </div>
 
@@ -349,7 +351,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                 <button
                   onClick={() => setShowRegenModal(true)}
                   className="btn-secondary"
-                  style={{ padding: '4px 10px', fontSize: '0.72rem' }}
+                  style={{ padding: '5px 10px', fontSize: '0.74rem' }}
                   title="Regenerate draft with custom guidance"
                 >
                   <RotateCcw size={12} /> Regenerate
@@ -357,7 +359,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                 <button
                   onClick={() => setReplyMessage(ticket.ai_draft_response)}
                   className="btn-secondary"
-                  style={{ padding: '4px 10px', fontSize: '0.72rem', borderColor: 'var(--emerald-500)', color: 'var(--emerald-400)' }}
+                  style={{ padding: '5px 12px', fontSize: '0.74rem', borderColor: 'var(--emerald-600)', color: 'var(--emerald-800)', fontWeight: 700 }}
                   title="Insert this draft into reply editor"
                 >
                   <Copy size={12} /> Insert Draft
@@ -368,29 +370,31 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
             {/* AI Policy Reasoning */}
             {ticket.ai_reasoning && (
               <div style={{
-                fontSize: '0.75rem',
-                color: 'var(--text-secondary)',
+                fontSize: '0.78rem',
+                color: 'var(--emerald-900)',
                 marginBottom: '10px',
-                padding: '6px 10px',
-                background: 'rgba(0, 0, 0, 0.25)',
-                borderRadius: '6px'
+                padding: '8px 12px',
+                background: 'rgba(255, 255, 255, 0.7)',
+                border: '1px solid #a7f3d0',
+                borderRadius: '6px',
+                lineHeight: 1.45
               }}>
-                <strong style={{ color: 'var(--emerald-400)' }}>Policy Match:</strong> {ticket.ai_reasoning}
+                <strong style={{ color: 'var(--emerald-800)' }}>Policy Match:</strong> {ticket.ai_reasoning}
               </div>
             )}
 
             {/* Draft Preview Snippet */}
             <div style={{
-              fontSize: '0.85rem',
-              color: '#e2e8f0',
+              fontSize: '0.88rem',
+              color: 'var(--text-main)',
               whiteSpace: 'pre-wrap',
-              maxHeight: '160px',
+              maxHeight: '170px',
               overflowY: 'auto',
-              background: 'rgba(0, 0, 0, 0.2)',
-              padding: '12px',
-              borderRadius: '6px',
-              lineHeight: 1.5,
-              border: '1px solid rgba(255, 255, 255, 0.05)'
+              background: '#ffffff',
+              padding: '14px',
+              borderRadius: '8px',
+              lineHeight: 1.6,
+              border: '1px solid #a7f3d0'
             }}>
               {ticket.ai_draft_response}
             </div>
@@ -398,7 +402,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
 
           {/* Conversation & Internal Notes Thread */}
           <div style={{ marginBottom: '24px' }}>
-            <h4 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '12px' }}>
+            <h4 style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '14px', fontWeight: 700 }}>
               Activity Stream & Notes ({messages.length})
             </h4>
 
@@ -412,42 +416,43 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                     key={m.id}
                     style={{
                       background: isInternal
-                        ? 'rgba(245, 158, 11, 0.08)'
+                        ? 'var(--amber-50)'
                         : isAdmin
-                        ? '#162836'
-                        : 'rgba(255, 255, 255, 0.03)',
+                        ? 'var(--bg-subtle)'
+                        : 'var(--emerald-50)',
                       border: isInternal
-                        ? '1px dashed rgba(245, 158, 11, 0.4)'
+                        ? '1px dashed rgba(217, 119, 6, 0.5)'
                         : isAdmin
-                        ? '1px solid rgba(56, 189, 248, 0.3)'
-                        : '1px solid var(--border-subtle)',
+                        ? '1px solid var(--border-subtle)'
+                        : '1px solid #a7f3d0',
                       borderRadius: 'var(--radius-md)',
-                      padding: '14px 16px'
+                      padding: '14px 16px',
+                      boxShadow: 'var(--shadow-sm)'
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         {isInternal ? (
-                          <span style={{ color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 700 }}>
+                          <span style={{ color: 'var(--amber-700)', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                             <Lock size={12} /> INTERNAL OPS NOTE (HIDDEN FROM AUTHOR)
                           </span>
                         ) : isAdmin ? (
-                          <span style={{ color: '#7dd3fc', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 600 }}>
+                          <span style={{ color: 'var(--blue-700)', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 700 }}>
                             <Shield size={12} /> {m.sender_name} (Admin Response)
                           </span>
                         ) : (
-                          <span style={{ color: 'var(--emerald-400)', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 600 }}>
+                          <span style={{ color: 'var(--emerald-800)', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 700 }}>
                             <User size={12} /> {m.sender_name} (Author Query)
                           </span>
                         )}
                       </div>
 
-                      <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                         {new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
 
-                    <div style={{ fontSize: '0.88rem', color: '#f1f5f9', whiteSpace: 'pre-wrap', lineHeight: 1.5 }}>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--text-main)', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
                       {m.message}
                     </div>
                   </div>
@@ -458,7 +463,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
 
           {/* Reply / Internal Note Composer */}
           <form onSubmit={handleSendMessage} style={{
-            background: 'rgba(0, 0, 0, 0.25)',
+            background: 'var(--bg-canvas)',
             border: '1px solid var(--border-subtle)',
             borderRadius: 'var(--radius-lg)',
             padding: '16px',
@@ -474,10 +479,10 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                     padding: '5px 12px',
                     borderRadius: '6px',
                     fontSize: '0.78rem',
-                    fontWeight: 600,
-                    background: !isInternalNote ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-                    color: !isInternalNote ? 'var(--emerald-400)' : 'var(--text-muted)',
-                    border: !isInternalNote ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid transparent'
+                    fontWeight: 700,
+                    background: !isInternalNote ? 'var(--emerald-50)' : 'transparent',
+                    color: !isInternalNote ? 'var(--emerald-800)' : 'var(--text-muted)',
+                    border: !isInternalNote ? '1px solid var(--emerald-600)' : '1px solid transparent'
                   }}
                 >
                   <Send size={12} style={{ display: 'inline', marginRight: '4px' }} /> Public Author Reply
@@ -490,18 +495,18 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                     padding: '5px 12px',
                     borderRadius: '6px',
                     fontSize: '0.78rem',
-                    fontWeight: 600,
-                    background: isInternalNote ? 'rgba(245, 158, 11, 0.2)' : 'transparent',
-                    color: isInternalNote ? '#fbbf24' : 'var(--text-muted)',
-                    border: isInternalNote ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent'
+                    fontWeight: 700,
+                    background: isInternalNote ? 'var(--amber-50)' : 'transparent',
+                    color: isInternalNote ? 'var(--amber-700)' : 'var(--text-muted)',
+                    border: isInternalNote ? '1px solid var(--amber-600)' : '1px solid transparent'
                   }}
                 >
                   <Lock size={12} style={{ display: 'inline', marginRight: '4px' }} /> Internal Note (Private)
                 </button>
               </div>
 
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                {isInternalNote ? '🔒 Only visible to BookLeaf ops' : '✉ Sends live notification to author'}
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                {isInternalNote ? '🔒 Only visible to BookLeaf operations' : '✉ Sends live notification to author'}
               </span>
             </div>
 
@@ -510,7 +515,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
               placeholder={isInternalNote ? "Add internal note (e.g. escalated to Repro India printing desk, tracking ref #)..." : "Write response to author (or edit AI-drafted reply above)..."}
               value={replyMessage}
               onChange={(e) => setReplyMessage(e.target.value)}
-              style={{ width: '100%', resize: 'vertical', fontSize: '0.88rem' }}
+              style={{ width: '100%', resize: 'vertical', fontSize: '0.9rem' }}
               required
             />
 
@@ -519,13 +524,13 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                 type="submit"
                 disabled={isSending || !replyMessage.trim()}
                 className={isInternalNote ? "btn-secondary" : "btn-primary"}
-                style={{ padding: '8px 16px', fontSize: '0.82rem' }}
+                style={{ padding: '9px 18px', fontSize: '0.84rem' }}
               >
                 {isSending ? (
                   <span>Sending...</span>
                 ) : isInternalNote ? (
                   <>
-                    <Lock size={14} color="#fbbf24" />
+                    <Lock size={14} color="var(--amber-600)" />
                     <span>Save Internal Note</span>
                   </>
                 ) : (
@@ -540,12 +545,12 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
         </div>
 
         {/* Right Sub-Column: Dossier & AI Triage Overrides */}
-        <div style={{ padding: '20px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '20px', background: 'rgba(0, 0, 0, 0.15)' }}>
+        <div style={{ padding: '20px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '18px', background: 'var(--bg-canvas)' }}>
           {/* AI Triage Controls (Category & Priority) */}
-          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '16px' }}>
+          <div style={{ background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '16px', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
-              <Sparkles size={16} color="var(--emerald-400)" />
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>
+              <Sparkles size={16} color="var(--emerald-700)" />
+              <span style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-main)' }}>
                 AI Classification & Triage
               </span>
             </div>
@@ -553,9 +558,9 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
             {/* Category Override */}
             <div style={{ marginBottom: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Category:</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Category:</span>
                 {ticket.category !== ticket.ai_category && (
-                  <span style={{ fontSize: '0.68rem', color: '#fbbf24' }}>Overridden</span>
+                  <span style={{ fontSize: '0.68rem', color: 'var(--amber-700)', fontWeight: 700 }}>Overridden</span>
                 )}
               </div>
               <select
@@ -575,9 +580,9 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
             {/* Priority Override */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Priority Score:</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Priority Score:</span>
                 {ticket.priority !== ticket.ai_priority && (
-                  <span style={{ fontSize: '0.68rem', color: '#fbbf24' }}>Overridden</span>
+                  <span style={{ fontSize: '0.68rem', color: 'var(--amber-700)', fontWeight: 700 }}>Overridden</span>
                 )}
               </div>
               <select
@@ -596,39 +601,39 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
           </div>
 
           {/* Author Dossier */}
-          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '16px' }}>
+          <div style={{ background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '16px', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
-              <User size={16} color="var(--emerald-400)" />
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>
+              <User size={16} color="var(--emerald-700)" />
+              <span style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-main)' }}>
                 Author Profile
               </span>
             </div>
 
             <div style={{ fontSize: '0.82rem', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div>
-                <span style={{ color: 'var(--text-muted)' }}>Name:</span>
-                <div style={{ fontWeight: 600, color: '#fff' }}>{ticket.author_name}</div>
+                <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Name:</span>
+                <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{ticket.author_name}</div>
               </div>
               <div>
-                <span style={{ color: 'var(--text-muted)' }}>Email:</span>
-                <div style={{ color: '#93c5fd' }}>{ticket.author_email}</div>
+                <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Email:</span>
+                <div style={{ color: 'var(--blue-700)', fontWeight: 600 }}>{ticket.author_email}</div>
               </div>
               <div>
-                <span style={{ color: 'var(--text-muted)' }}>Phone & City:</span>
+                <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Phone & City:</span>
                 <div>{ticket.author_phone || 'N/A'} • {ticket.author_city || 'N/A'}</div>
               </div>
               <div>
-                <span style={{ color: 'var(--text-muted)' }}>Joined:</span>
+                <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Joined:</span>
                 <div>{ticket.author_joined_date || 'N/A'}</div>
               </div>
             </div>
           </div>
 
           {/* Book Dossier (if linked) */}
-          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '16px' }}>
+          <div style={{ background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '16px', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
-              <BookOpen size={16} color="var(--emerald-400)" />
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>
+              <BookOpen size={16} color="var(--emerald-700)" />
+              <span style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-main)' }}>
                 Associated Title
               </span>
             </div>
@@ -636,43 +641,43 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
             {book ? (
               <div style={{ fontSize: '0.82rem', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <div>
-                  <span style={{ color: 'var(--text-muted)' }}>Title:</span>
-                  <div style={{ fontWeight: 600, color: '#fff' }}>{book.title}</div>
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Title:</span>
+                  <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{book.title}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-muted)' }}>ISBN:</span>
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>ISBN:</span>
                   <div style={{ fontFamily: 'var(--font-mono)' }}>{book.isbn || 'Pending'}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-muted)' }}>Status:</span>
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Status:</span>
                   <div>
                     <span className={`badge ${book.status === 'Published & Live' ? 'badge-resolved' : 'badge-inprogress'}`} style={{ fontSize: '0.68rem' }}>
                       {book.status}
                     </span>
                   </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', paddingTop: '6px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', paddingTop: '8px', borderTop: '1px solid var(--border-subtle)' }}>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Copies Sold:</span>
-                    <div style={{ fontWeight: 600 }}>{book.total_copies_sold}</div>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Copies Sold:</span>
+                    <div style={{ fontWeight: 700 }}>{book.total_copies_sold}</div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>MRP:</span>
-                    <div style={{ fontWeight: 600 }}>{book.mrp ? `₹${book.mrp}` : 'N/A'}</div>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>MRP:</span>
+                    <div style={{ fontWeight: 700 }}>{book.mrp ? `₹${book.mrp}` : 'N/A'}</div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Royalty Paid:</span>
-                    <div style={{ color: '#60a5fa' }}>₹{book.royalty_paid}</div>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Royalty Paid:</span>
+                    <div style={{ color: 'var(--blue-700)', fontWeight: 700 }}>₹{book.royalty_paid}</div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Pending:</span>
-                    <div style={{ color: '#fbbf24' }}>₹{book.royalty_pending}</div>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Pending:</span>
+                    <div style={{ color: 'var(--amber-700)', fontWeight: 700 }}>₹{book.royalty_pending}</div>
                   </div>
                 </div>
               </div>
             ) : (
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                This is a general or account-level inquiry. Not tied to a specific title.
+                General account-level inquiry (not book-specific).
               </div>
             )}
           </div>
@@ -683,8 +688,10 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
       {showRegenModal && (
         <div className="modal-overlay">
           <div className="modal-content" style={{ maxWidth: '520px', padding: '24px' }}>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px' }}>Regenerate AI Response Draft</h3>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '8px', color: 'var(--text-main)' }}>
+              Regenerate AI Response Draft
+            </h3>
+            <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
               Provide optional instructions to adjust tone, cite specific exceptions, or modify resolution commitments:
             </p>
 

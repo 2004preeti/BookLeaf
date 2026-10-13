@@ -9,7 +9,7 @@ export function ApiDocsModal({ isOpen, onClose }) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content fade-in" style={{ maxWidth: '880px', maxHeight: '85vh' }}>
+      <div className="modal-content" style={{ maxWidth: '880px', maxHeight: '88vh', background: '#ffffff', display: 'flex', flexDirection: 'column' }}>
         {/* Header */}
         <div style={{
           padding: '20px 24px',
@@ -17,21 +17,21 @@ export function ApiDocsModal({ isOpen, onClose }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: 'rgba(255, 255, 255, 0.02)'
+          background: 'var(--bg-canvas)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
               padding: '6px',
               borderRadius: '8px',
-              background: 'var(--emerald-glow)',
-              color: 'var(--emerald-400)'
+              background: 'var(--emerald-50)',
+              color: 'var(--emerald-700)'
             }}>
               <Code size={20} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.2rem' }}>System Architecture & API Specifications</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                Technical overview for BookLeaf technical evaluation team
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-main)' }}>System Architecture & API Specifications</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>
+                Technical overview and policy design for BookLeaf technical evaluation team
               </p>
             </div>
           </div>
@@ -42,7 +42,7 @@ export function ApiDocsModal({ isOpen, onClose }) {
         </div>
 
         {/* Tab Navigation */}
-        <div style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', background: 'rgba(0, 0, 0, 0.2)' }}>
+        <div style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', background: 'var(--bg-canvas)' }}>
           {[
             { id: 'endpoints', label: 'REST API Endpoints', icon: Layers },
             { id: 'ai-architecture', label: 'AI Strategy & Cost Optimization', icon: Cpu },
@@ -58,13 +58,13 @@ export function ApiDocsModal({ isOpen, onClose }) {
                 style={{
                   padding: '12px 18px',
                   fontSize: '0.82rem',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  color: isActive ? 'var(--emerald-400)' : 'var(--text-muted)',
-                  borderBottom: isActive ? '2px solid var(--emerald-500)' : '2px solid transparent',
-                  background: isActive ? 'rgba(16, 185, 129, 0.06)' : 'transparent'
+                  color: isActive ? 'var(--emerald-700)' : 'var(--text-muted)',
+                  borderBottom: isActive ? '2px solid var(--emerald-600)' : '2px solid transparent',
+                  background: isActive ? '#ffffff' : 'transparent'
                 }}
               >
                 <Icon size={14} />
@@ -75,9 +75,9 @@ export function ApiDocsModal({ isOpen, onClose }) {
         </div>
 
         {/* Tab Contents */}
-        <div style={{ padding: '24px', overflowY: 'auto' }}>
+        <div style={{ padding: '24px', overflowY: 'auto', flex: 1, background: '#ffffff' }}>
           {activeTab === 'endpoints' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                 All endpoints are secured via JWT bearer tokens and enforce strict Role-Based Access Control (RBAC).
               </div>
@@ -97,7 +97,7 @@ export function ApiDocsModal({ isOpen, onClose }) {
                 { method: 'GET', path: '/api/stats/dashboard', access: 'Admin Only', desc: 'Fetch aggregate operations queue metrics: SLA, overdue (>24h), status breakdowns.' }
               ].map((ep, i) => (
                 <div key={i} style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
+                  background: 'var(--bg-canvas)',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--radius-md)',
                   padding: '12px 16px'
@@ -108,20 +108,20 @@ export function ApiDocsModal({ isOpen, onClose }) {
                       fontWeight: 800,
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      background: ep.method === 'GET' ? 'rgba(59, 130, 246, 0.2)' : ep.method === 'POST' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                      color: ep.method === 'GET' ? '#60a5fa' : ep.method === 'POST' ? '#34d399' : '#fbbf24',
+                      background: ep.method === 'GET' ? 'var(--blue-50)' : ep.method === 'POST' ? 'var(--emerald-50)' : 'var(--amber-50)',
+                      color: ep.method === 'GET' ? 'var(--blue-700)' : ep.method === 'POST' ? 'var(--emerald-700)' : 'var(--amber-700)',
                       fontFamily: 'var(--font-mono)'
                     }}>
                       {ep.method}
                     </span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#fff', fontWeight: 600 }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: 700 }}>
                       {ep.path}
                     </span>
                     <span className="badge badge-category" style={{ marginLeft: 'auto', fontSize: '0.68rem' }}>
                       {ep.access}
                     </span>
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
                     {ep.desc}
                   </div>
                 </div>
@@ -132,14 +132,14 @@ export function ApiDocsModal({ isOpen, onClose }) {
           {activeTab === 'ai-architecture' && (
             <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '16px', lineHeight: 1.6 }}>
               <div>
-                <h4 style={{ color: '#fff', fontSize: '1rem', marginBottom: '6px' }}>1. Dynamic Context Pruning (Token Cost Awareness)</h4>
+                <h4 style={{ color: 'var(--text-main)', fontSize: '1.05rem', fontWeight: 800, marginBottom: '6px' }}>1. Dynamic Context Pruning (Token Cost Awareness)</h4>
                 <p>
                   Rather than dumping the entire 10,000-token Knowledge Base and full author catalogs on every call, the engine uses <strong>Policy Domain Routing</strong>. The incoming query is classified, and only the pertinent policy module (e.g. Royalty Policy for payment queries, ISBN Policy for metadata queries) along with the specific author title snapshot is injected. This reduces token consumption by over <strong>75% per API invocation</strong>.
                 </p>
               </div>
 
               <div>
-                <h4 style={{ color: '#fff', fontSize: '1rem', marginBottom: '6px' }}>2. Prompt Engineering & Tone Calibration</h4>
+                <h4 style={{ color: 'var(--text-main)', fontSize: '1.05rem', fontWeight: 800, marginBottom: '6px' }}>2. Prompt Engineering & Tone Calibration</h4>
                 <p>
                   Prompts enforce BookLeaf's exact communication guidelines:
                 </p>
@@ -152,7 +152,7 @@ export function ApiDocsModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <h4 style={{ color: '#fff', fontSize: '1rem', marginBottom: '6px' }}>3. Model Selection Justification</h4>
+                <h4 style={{ color: 'var(--text-main)', fontSize: '1.05rem', fontWeight: 800, marginBottom: '6px' }}>3. Model Selection Justification</h4>
                 <p>
                   Configurable for <code>gpt-4o-mini</code> (OpenAI) or <code>claude-3-haiku</code> (Anthropic). These smaller modern models offer near frontier-tier instruction following for structured classification and empathetic tone adherence at ~1/20th the cost of flagship models, ensuring high throughput for 1,200+ monthly titles.
                 </p>
@@ -162,29 +162,29 @@ export function ApiDocsModal({ isOpen, onClose }) {
 
           {activeTab === 'knowledge-base' && (
             <div style={{ fontSize: '0.85rem', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <strong style={{ color: 'var(--emerald-400)' }}>Royalty Policy:</strong>
+              <div style={{ background: 'var(--bg-canvas)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+                <strong style={{ color: 'var(--emerald-700)', fontSize: '0.95rem' }}>Royalty Policy:</strong>
                 <p style={{ marginTop: '4px', color: 'var(--text-secondary)' }}>
                   80/20 split (80% net profit to author). Net profit = MRP minus printing, platform commission, and shipping. Calculated quarterly, paid within 45 days. Minimum payout threshold is ₹1,000 (below this, rolls over to next quarter).
                 </p>
               </div>
 
-              <div style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <strong style={{ color: 'var(--emerald-400)' }}>ISBN Policy:</strong>
+              <div style={{ background: 'var(--bg-canvas)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+                <strong style={{ color: 'var(--emerald-700)', fontSize: '0.95rem' }}>ISBN Policy:</strong>
                 <p style={{ marginTop: '4px', color: 'var(--text-secondary)' }}>
                   Assigned by BookLeaf under publisher imprint. Data mismatch or linking errors are treated as Critical priority and escalated to production desk with a 48-hour resolution timeline.
                 </p>
               </div>
 
-              <div style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <strong style={{ color: 'var(--emerald-400)' }}>Printing & Quality:</strong>
+              <div style={{ background: 'var(--bg-canvas)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+                <strong style={{ color: 'var(--emerald-700)', fontSize: '0.95rem' }}>Printing & Quality:</strong>
                 <p style={{ marginTop: '4px', color: 'var(--text-secondary)' }}>
                   Standard turnaround 5–7 business days from Delhi facility or partners (Repro India, Epitome Books). Free reprint arranged upon photo verification of misprints or binding defects within 5–7 business days.
                 </p>
               </div>
 
-              <div style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <strong style={{ color: 'var(--emerald-400)' }}>Distribution Channels & Stock Sync:</strong>
+              <div style={{ background: 'var(--bg-canvas)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+                <strong style={{ color: 'var(--emerald-700)', fontSize: '0.95rem' }}>Distribution Channels & Stock Sync:</strong>
                 <p style={{ marginTop: '4px', color: 'var(--text-secondary)' }}>
                   Amazon India, Flipkart, Amazon US, Amazon UK, BookLeaf Store. Listings go live 7–10 days post publication. "Currently Unavailable" indicates marketplace stock sync lag, resolved within 24–48 hours via automated catalog re-sync.
                 </p>
@@ -195,21 +195,21 @@ export function ApiDocsModal({ isOpen, onClose }) {
           {activeTab === 'security' && (
             <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '16px', lineHeight: 1.6 }}>
               <div>
-                <h4 style={{ color: '#fff', fontSize: '1rem', marginBottom: '6px' }}>1. Graceful Degradation (Zero System Breakage)</h4>
+                <h4 style={{ color: 'var(--text-main)', fontSize: '1.05rem', fontWeight: 800, marginBottom: '6px' }}>1. Graceful Degradation (Zero System Breakage)</h4>
                 <p>
                   If external AI APIs are unreachable, rate-limited, or keys are not yet configured in <code>.env</code>, the application <strong>never crashes</strong>. The deterministic BookLeaf Knowledge Base Rules Engine activates transparently, applying exact policy categorization, scoring, and drafting with zero downtime.
                 </p>
               </div>
 
               <div>
-                <h4 style={{ color: '#fff', fontSize: '1rem', marginBottom: '6px' }}>2. API Key Security</h4>
+                <h4 style={{ color: 'var(--text-main)', fontSize: '1.05rem', fontWeight: 800, marginBottom: '6px' }}>2. API Key Security</h4>
                 <p>
                   API keys are stored strictly in server-side environment variables and are never bundled, transmitted, or leaked into frontend client bundles.
                 </p>
               </div>
 
               <div>
-                <h4 style={{ color: '#fff', fontSize: '1rem', marginBottom: '6px' }}>3. Data Privacy & Confidentiality</h4>
+                <h4 style={{ color: 'var(--text-main)', fontSize: '1.05rem', fontWeight: 800, marginBottom: '6px' }}>3. Data Privacy & Confidentiality</h4>
                 <p>
                   Internal admin notes (<code>is_internal_note = 1</code>) are stripped at the database query layer for author requests. Authors cannot access or query internal notes even if crafting custom API requests.
                 </p>

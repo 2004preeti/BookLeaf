@@ -51,20 +51,20 @@ export function TicketQueue({
   };
 
   return (
-    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#ffffff' }}>
       {/* Queue Header & Filters Toolbar */}
-      <div style={{ padding: '18px 20px', borderBottom: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.02)' }}>
+      <div style={{ padding: '18px 20px', borderBottom: '1px solid var(--border-subtle)', background: 'var(--bg-canvas)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
           <div>
-            <h3 style={{ fontSize: '1.15rem', color: '#fff' }}>Author Support Queue</h3>
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)', fontWeight: 800 }}>Author Support Queue</h3>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Showing {tickets.length} matching tickets
             </span>
           </div>
 
           {/* Sort Selector */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
               <ArrowUpDown size={12} /> Sort:
             </span>
             <select
@@ -87,7 +87,7 @@ export function TicketQueue({
             placeholder="Search tickets by author, subject, book, or #ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: '100%', paddingLeft: '34px', fontSize: '0.85rem', padding: '8px 12px 8px 34px' }}
+            style={{ width: '100%', fontSize: '0.85rem', padding: '8px 12px 8px 34px' }}
           />
         </div>
 
@@ -129,7 +129,7 @@ export function TicketQueue({
       </div>
 
       {/* Tickets List */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '10px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px', background: '#ffffff' }}>
         {tickets.length === 0 ? (
           <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--text-muted)' }}>
             No tickets match your active filter criteria.
@@ -149,30 +149,31 @@ export function TicketQueue({
                   marginBottom: '8px',
                   cursor: 'pointer',
                   border: isSelected
-                    ? '1px solid var(--emerald-500)'
+                    ? '1px solid var(--emerald-600)'
                     : isCritical && (t.status === 'Open' || t.status === 'In Progress')
-                    ? '1px solid rgba(239, 68, 68, 0.4)'
+                    ? '1px solid rgba(225, 29, 72, 0.4)'
                     : '1px solid var(--border-subtle)',
                   background: isSelected
-                    ? 'rgba(16, 185, 129, 0.12)'
+                    ? 'var(--emerald-50)'
                     : isCritical && (t.status === 'Open' || t.status === 'In Progress')
-                    ? 'rgba(239, 68, 68, 0.06)'
-                    : 'rgba(255, 255, 255, 0.02)',
-                  transition: 'all 0.15s'
+                    ? 'var(--rose-50)'
+                    : '#ffffff',
+                  boxShadow: isSelected ? 'var(--shadow-sm)' : 'none',
+                  transition: 'all 0.15s ease'
                 }}
               >
                 {/* Row 1: Ticket Number, Badges */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, color: 'var(--emerald-400)' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 800, color: 'var(--emerald-700)' }}>
                       {t.ticket_number}
                     </span>
                     <span className={`badge ${getPriorityBadge(t.priority)}`} style={{ fontSize: '0.68rem', padding: '2px 8px' }}>
                       {t.priority}
                     </span>
                     {t.priority_overridden && (
-                      <span title="Priority manually overridden by admin" style={{ fontSize: '0.65rem', color: '#fbbf24' }}>
-                        ✎
+                      <span title="Priority manually overridden by admin" style={{ fontSize: '0.68rem', color: 'var(--amber-700)', fontWeight: 700 }}>
+                        ✎ Override
                       </span>
                     )}
                   </div>
@@ -183,13 +184,13 @@ export function TicketQueue({
                 </div>
 
                 {/* Row 2: Subject */}
-                <div style={{ fontWeight: 600, fontSize: '0.9rem', color: '#fff', marginBottom: '6px', lineHeight: 1.35 }}>
+                <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--text-main)', marginBottom: '6px', lineHeight: 1.35 }}>
                   {t.subject}
                 </div>
 
                 {/* Row 3: Author & Book Details */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
                     <User size={12} color="var(--text-muted)" />
                     {t.author_name}
                   </span>
@@ -200,14 +201,14 @@ export function TicketQueue({
                 </div>
 
                 {/* Row 4: Footer - Category, Overdue notice, Age */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)', paddingTop: '6px', borderTop: '1px solid rgba(255, 255, 255, 0.04)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)', paddingTop: '6px', borderTop: '1px solid var(--border-subtle)' }}>
                   <span className="badge badge-category" style={{ fontSize: '0.68rem', padding: '2px 6px' }}>
                     {t.category}
                   </span>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     {t.is_overdue_24h && (
-                      <span style={{ color: '#f87171', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                      <span style={{ color: 'var(--rose-700)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px' }}>
                         <Clock size={11} /> &gt;{t.age_hours}h old
                       </span>
                     )}

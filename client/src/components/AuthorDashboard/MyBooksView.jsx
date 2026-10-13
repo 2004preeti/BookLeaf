@@ -17,10 +17,10 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '22px' }}>
         <div>
-          <h2 style={{ fontSize: '1.25rem' }}>My Published Books & Titles</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-main)' }}>My Published Books & Titles</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>
             Detailed breakdown of royalties, copies sold, and retail distribution platforms.
           </p>
         </div>
@@ -35,7 +35,7 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '22px' }}>
         {books.map((book) => {
           const isLive = book.status === 'Published & Live';
           const isInProduction = !isLive;
@@ -46,29 +46,31 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
               <div style={{
                 padding: '18px 20px',
                 borderBottom: '1px solid var(--border-subtle)',
-                background: 'rgba(255, 255, 255, 0.02)',
+                background: 'var(--bg-canvas)',
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'space-between',
                 gap: '12px'
               }}>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                     <span style={{
                       fontSize: '0.72rem',
                       fontFamily: 'var(--font-mono)',
-                      background: 'rgba(255, 255, 255, 0.08)',
+                      background: 'var(--emerald-50)',
+                      border: '1px solid rgba(4, 120, 87, 0.2)',
                       padding: '2px 6px',
                       borderRadius: '4px',
-                      color: 'var(--emerald-400)'
+                      color: 'var(--emerald-700)',
+                      fontWeight: 700
                     }}>
                       {book.book_id}
                     </span>
-                    <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                       {book.genre}
                     </span>
                   </div>
-                  <h3 style={{ fontSize: '1.1rem', lineHeight: 1.3, color: '#fff' }}>
+                  <h3 style={{ fontSize: '1.15rem', lineHeight: 1.35, color: 'var(--text-main)', fontWeight: 800 }}>
                     {book.title}
                   </h3>
                 </div>
@@ -81,50 +83,51 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
               </div>
 
               {/* Body */}
-              <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px', background: '#ffffff' }}>
                 {/* Specific stage if in production */}
                 {isInProduction && (
                   <div style={{
-                    background: 'rgba(168, 85, 247, 0.12)',
-                    border: '1px solid rgba(168, 85, 247, 0.3)',
+                    background: 'var(--purple-50)',
+                    border: '1px solid rgba(147, 51, 234, 0.25)',
                     borderRadius: 'var(--radius-md)',
                     padding: '12px 14px',
                     fontSize: '0.82rem',
-                    color: '#d8b4fe',
+                    color: 'var(--purple-700)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '10px'
+                    gap: '10px',
+                    fontWeight: 600
                   }}>
                     <Clock3 size={16} />
                     <div>
-                      <strong>Production Pipeline Stage:</strong> {book.status}
+                      <strong>Production Stage:</strong> {book.status}
                     </div>
                   </div>
                 )}
 
                 {/* Metadata Row */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.82rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', fontSize: '0.82rem' }}>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>ISBN:</span>
-                    <div style={{ fontFamily: 'var(--font-mono)', color: book.isbn ? '#e2e8f0' : 'var(--text-muted)', marginTop: '2px' }}>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>ISBN:</span>
+                    <div style={{ fontFamily: 'var(--font-mono)', color: book.isbn ? 'var(--text-main)' : 'var(--text-muted)', marginTop: '2px', fontWeight: 600 }}>
                       {book.isbn || 'Pending Assignment'}
                     </div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Published Date:</span>
-                    <div style={{ color: '#e2e8f0', marginTop: '2px' }}>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Published Date:</span>
+                    <div style={{ color: 'var(--text-main)', marginTop: '2px', fontWeight: 500 }}>
                       {book.publication_date || 'In Production'}
                     </div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Retail MRP:</span>
-                    <div style={{ color: '#e2e8f0', marginTop: '2px', fontWeight: 600 }}>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Retail MRP:</span>
+                    <div style={{ color: 'var(--text-main)', marginTop: '2px', fontWeight: 700 }}>
                       {book.mrp ? `₹${book.mrp}` : 'To be determined'}
                     </div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Print Partner:</span>
-                    <div style={{ color: '#e2e8f0', marginTop: '2px' }}>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Print Partner:</span>
+                    <div style={{ color: 'var(--text-main)', marginTop: '2px', fontWeight: 500 }}>
                       {book.print_partner || 'BookLeaf Delhi Ops'}
                     </div>
                   </div>
@@ -133,7 +136,7 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
                 {/* Financial Stats Bar (if live) */}
                 {isLive ? (
                   <div style={{
-                    background: 'rgba(0, 0, 0, 0.25)',
+                    background: 'var(--bg-subtle)',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-md)',
                     padding: '14px',
@@ -143,20 +146,20 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
                     textAlign: 'center'
                   }}>
                     <div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Copies Sold</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginTop: '2px' }}>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>Copies Sold</div>
+                      <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '2px' }}>
                         {book.total_copies_sold.toLocaleString('en-IN')}
                       </div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Royalty Paid</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#60a5fa', marginTop: '2px' }}>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>Royalty Paid</div>
+                      <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--blue-700)', marginTop: '2px' }}>
                         ₹{book.royalty_paid.toLocaleString('en-IN')}
                       </div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Pending</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 700, color: book.royalty_pending > 0 ? '#fbbf24' : 'var(--emerald-400)', marginTop: '2px' }}>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>Pending</div>
+                      <div style={{ fontSize: '1.1rem', fontWeight: 800, color: book.royalty_pending > 0 ? 'var(--amber-700)' : 'var(--emerald-700)', marginTop: '2px' }}>
                         ₹{book.royalty_pending.toLocaleString('en-IN')}
                       </div>
                     </div>
@@ -164,7 +167,7 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
                 ) : (
                   <div style={{
                     padding: '12px',
-                    background: 'rgba(0, 0, 0, 0.2)',
+                    background: 'var(--bg-subtle)',
                     borderRadius: 'var(--radius-md)',
                     fontSize: '0.8rem',
                     color: 'var(--text-muted)',
@@ -176,14 +179,14 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
 
                 {/* Availability platforms */}
                 <div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <ShoppingBag size={12} />
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '5px', fontWeight: 600 }}>
+                    <ShoppingBag size={13} />
                     <span>Distribution Channels:</span>
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                     {book.available_on && book.available_on.length > 0 ? (
                       book.available_on.map((channel, i) => (
-                        <span key={i} className="badge badge-category" style={{ fontSize: '0.72rem' }}>
+                        <span key={i} className="badge badge-category" style={{ fontSize: '0.74rem' }}>
                           {channel}
                         </span>
                       ))
@@ -200,7 +203,7 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
               <div style={{
                 padding: '12px 20px',
                 borderTop: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.15)',
+                background: 'var(--bg-canvas)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-end'
@@ -208,10 +211,10 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
                 <button
                   onClick={() => onOpenSubmitTicket(book.book_id)}
                   className="btn-secondary"
-                  style={{ fontSize: '0.8rem', padding: '6px 12px' }}
+                  style={{ fontSize: '0.8rem', padding: '6px 14px' }}
                 >
-                  <MessageSquarePlus size={14} color="var(--emerald-400)" />
-                  <span>Ask Support About This Book</span>
+                  <MessageSquarePlus size={14} color="var(--emerald-700)" />
+                  <span>Raise Support Ticket</span>
                 </button>
               </div>
             </div>
