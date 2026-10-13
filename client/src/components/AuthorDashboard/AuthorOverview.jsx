@@ -7,135 +7,136 @@ export function AuthorOverview({ summary, author }) {
 
   return (
     <div style={{ marginBottom: '28px' }}>
-      {/* Welcome Editorial Banner */}
+      {/* Modern Clean Header Row */}
       <div style={{
-        background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
-        border: '1px solid #a7f3d0',
-        borderRadius: 'var(--radius-lg)',
-        padding: '24px 28px',
-        marginBottom: '24px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        marginBottom: '24px',
         flexWrap: 'wrap',
-        gap: '16px',
-        boxShadow: 'var(--shadow-sm)'
+        gap: '14px',
+        paddingBottom: '18px',
+        borderBottom: '1px solid var(--border-subtle)'
       }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-            <span style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--emerald-900)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
               Welcome back, {author?.name}
-            </span>
-            <span className="badge badge-resolved" style={{ fontSize: '0.7rem' }}>
+            </h2>
+            <span style={{
+              fontSize: '0.72rem',
+              fontWeight: 700,
+              padding: '2px 8px',
+              borderRadius: '6px',
+              background: 'var(--emerald-50)',
+              color: 'var(--emerald-800)',
+              border: '1px solid rgba(4, 120, 87, 0.2)'
+            }}>
               Verified Author
             </span>
           </div>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', maxWidth: '650px' }}>
-            Author ID: <code style={{ color: 'var(--emerald-700)', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{author?.author_id}</code> • Member since {author?.joined_date} • {author?.city}
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+            Author ID: <strong style={{ color: 'var(--text-main)' }}>{author?.author_id}</strong> • Member since {author?.joined_date} • {author?.city}
           </p>
         </div>
 
-        {/* Payout Status Notice */}
+        {/* Payout Status Callout */}
         <div style={{
-          background: isThresholdMet ? '#ffffff' : '#ffffff',
-          border: `1px solid ${isThresholdMet ? '#6ee7b7' : '#fde047'}`,
-          borderRadius: 'var(--radius-md)',
-          padding: '12px 18px',
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
-          maxWidth: '400px',
-          boxShadow: 'var(--shadow-sm)'
+          gap: '10px',
+          padding: '8px 16px',
+          borderRadius: '10px',
+          background: isThresholdMet ? 'var(--emerald-50)' : 'var(--amber-50)',
+          border: `1px solid ${isThresholdMet ? 'rgba(4, 120, 87, 0.25)' : 'rgba(217, 119, 6, 0.25)'}`
         }}>
           {isThresholdMet ? (
-            <Sparkles size={20} color="#059669" />
+            <Sparkles size={18} color="var(--emerald-700)" />
           ) : (
-            <AlertCircle size={20} color="#d97706" />
+            <AlertCircle size={18} color="var(--amber-700)" />
           )}
-          <div style={{ fontSize: '0.8rem', lineHeight: 1.4 }}>
-            <div style={{ fontWeight: 700, color: isThresholdMet ? 'var(--emerald-800)' : 'var(--amber-700)' }}>
+          <div>
+            <div style={{ fontSize: '0.82rem', fontWeight: 800, color: isThresholdMet ? 'var(--emerald-800)' : 'var(--amber-800)' }}>
               {isThresholdMet ? 'Quarterly Payout Eligible' : 'Rolling Over Next Cycle'}
             </div>
-            <div style={{ color: 'var(--text-secondary)' }}>
-              {isThresholdMet
-                ? 'Pending balance meets the ₹1,000 threshold and is scheduled for bank disbursement within 45 days.'
-                : 'Pending balance is below ₹1,000 minimum threshold. Accumulated earnings will roll over to next quarter.'}
+            <div style={{ fontSize: '0.72rem', color: isThresholdMet ? 'var(--emerald-700)' : 'var(--amber-700)' }}>
+              {isThresholdMet ? 'Threshold (₹1,000) met • Bank transfer within 45 days' : 'Pending royalties are below ₹1,000 threshold'}
             </div>
           </div>
         </div>
       </div>
 
-      {/* 4 Financial & Catalog Metric Cards */}
+      {/* 4 Crisp Metric Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '16px' }}>
         {/* Total Earned */}
-        <div className="glass-card" style={{ padding: '22px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+            <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Total Royalties Earned
             </span>
-            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--emerald-50)', color: 'var(--emerald-700)' }}>
-              <TrendingUp size={18} />
+            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--emerald-50)', color: 'var(--emerald-700)' }}>
+              <TrendingUp size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
+          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
             ₹{(summary?.total_royalty_earned || 0).toLocaleString('en-IN')}
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
             80% Author split of net profit per title
           </div>
         </div>
 
         {/* Royalty Paid */}
-        <div className="glass-card" style={{ padding: '22px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+            <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Disbursed to Bank
             </span>
-            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--blue-50)', color: 'var(--blue-700)' }}>
-              <DollarSign size={18} />
+            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--blue-50)', color: 'var(--blue-700)' }}>
+              <DollarSign size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
+          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
             ₹{(summary?.royalty_paid || 0).toLocaleString('en-IN')}
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
             Successfully transferred to bank account
           </div>
         </div>
 
         {/* Royalty Pending */}
-        <div className="glass-card" style={{ padding: '22px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+            <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Pending Royalties
             </span>
-            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--amber-50)', color: 'var(--amber-700)' }}>
-              <Clock size={18} />
+            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--amber-50)', color: 'var(--amber-700)' }}>
+              <Clock size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--amber-700)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
+          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--amber-700)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
             ₹{(summary?.royalty_pending || 0).toLocaleString('en-IN')}
           </div>
-          <div style={{ fontSize: '0.75rem', color: isThresholdMet ? 'var(--emerald-700)' : 'var(--text-muted)', fontWeight: isThresholdMet ? 600 : 400 }}>
-            {isThresholdMet ? 'Eligible for active batch transfer' : 'Rolls over until ₹1,000 accumulated'}
+          <div style={{ fontSize: '0.74rem', color: isThresholdMet ? 'var(--emerald-700)' : 'var(--text-muted)', fontWeight: isThresholdMet ? 700 : 500 }}>
+            {isThresholdMet ? '✓ Scheduled for active batch disbursement' : 'Rolls over until ₹1,000 threshold'}
           </div>
         </div>
 
         {/* Catalog & Copies Sold */}
-        <div className="glass-card" style={{ padding: '22px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+            <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Published Catalog
             </span>
-            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--purple-50)', color: 'var(--purple-700)' }}>
-              <BookCheck size={18} />
+            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--purple-50)', color: 'var(--purple-700)' }}>
+              <BookCheck size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
-            {(summary?.total_copies_sold || 0).toLocaleString('en-IN')} <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 500 }}>copies</span>
+          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
+            {(summary?.total_copies_sold || 0).toLocaleString('en-IN')} <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontWeight: 500 }}>copies</span>
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            Across {summary?.published_count || 0} published {summary?.in_production_count > 0 ? `(${summary.in_production_count} in production)` : ''}
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+            Across {summary?.published_count || 0} published {summary?.in_production_count > 0 ? `(${summary.in_production_count} in pipeline)` : ''}
           </div>
         </div>
       </div>

@@ -261,49 +261,17 @@ export function Sidebar({
 
         <div style={{ flex: 1 }} />
 
-        {/* 3. Utility Nav: API Docs & Realtime Pill */}
-        <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {/* 3. Utility Nav: API Docs */}
+        <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
           <button
             onClick={onOpenApiDocs}
             className="sidebar-nav-item"
             style={{ color: 'var(--text-secondary)' }}
             title="REST API & Architecture Docs"
           >
-            <Code2 size={17} />
+            <Code2 size={16} />
             {!isCollapsed && <span>API Reference</span>}
           </button>
-
-          {/* WebSocket Status */}
-          <div
-            style={{
-              padding: isCollapsed ? '8px 0' : '8px 12px',
-              borderRadius: '8px',
-              background: isConnected ? 'rgba(4, 120, 87, 0.06)' : 'rgba(239, 68, 68, 0.06)',
-              border: `1px solid ${isConnected ? 'rgba(4, 120, 87, 0.15)' : 'rgba(239, 68, 68, 0.15)'}`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: isCollapsed ? 'center' : 'flex-start',
-              gap: '8px'
-            }}
-            title={isConnected ? 'Live WebSocket Connected' : 'WebSocket Disconnected'}
-          >
-            <Radio
-              size={13}
-              color={isConnected ? '#059669' : '#ef4444'}
-              className={isConnected ? 'pulse-green' : ''}
-            />
-            {!isCollapsed && (
-              <span
-                style={{
-                  fontSize: '0.72rem',
-                  fontWeight: 600,
-                  color: isConnected ? 'var(--emerald-700)' : '#dc2626'
-                }}
-              >
-                {isConnected ? 'Real-Time Sync Active' : 'Connecting Sync...'}
-              </span>
-            )}
-          </div>
         </div>
       </div>
 

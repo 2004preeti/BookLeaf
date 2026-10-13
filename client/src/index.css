@@ -182,15 +182,17 @@ input:focus, select:focus, textarea:focus {
 .sidebar-nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
+  gap: 10px;
+  padding: 8px 12px;
   border-radius: var(--radius-md);
   color: var(--text-secondary);
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.86rem;
+  font-weight: 500;
   width: 100%;
   text-align: left;
   transition: all 0.15s ease;
+  border: none;
+  background: transparent;
 }
 .sidebar-nav-item:hover {
   background: var(--bg-subtle);
@@ -198,9 +200,8 @@ input:focus, select:focus, textarea:focus {
 }
 .sidebar-nav-item.active {
   background: var(--emerald-50);
-  color: var(--emerald-700);
+  color: var(--emerald-800);
   font-weight: 700;
-  border-left: 3px solid var(--emerald-700);
 }
 
 /* Persona Switcher Pills */
