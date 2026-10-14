@@ -9,6 +9,7 @@ client/node_modules/
 # Logs and databases
 *.log
 npm-debug.log*
+data/*.db
 data/*.db-shm
 data/*.db-wal
 
