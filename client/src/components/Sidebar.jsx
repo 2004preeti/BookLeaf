@@ -70,13 +70,13 @@ export function Sidebar({
               width: '38px',
               height: '38px',
               borderRadius: '10px',
-              background: 'linear-gradient(135deg, #047857 0%, #065f46 100%)',
+              background: 'linear-gradient(135deg, #4f46e5 0%, #4338ca 100%)',
               color: '#ffffff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
-              boxShadow: '0 4px 10px rgba(4, 120, 87, 0.25)'
+              boxShadow: '0 4px 10px rgba(79, 70, 229, 0.25)'
             }}
           >
             <BookMarked size={20} />
@@ -105,9 +105,9 @@ export function Sidebar({
                     letterSpacing: '0.04em',
                     padding: '2px 6px',
                     borderRadius: '4px',
-                    background: isAdmin ? 'var(--blue-50)' : 'var(--emerald-50)',
-                    color: isAdmin ? 'var(--blue-600)' : 'var(--emerald-700)',
-                    border: `1px solid ${isAdmin ? 'rgba(37, 99, 235, 0.2)' : 'rgba(4, 120, 87, 0.2)'}`
+                    background: isAdmin ? 'var(--violet-50)' : 'var(--indigo-50)',
+                    color: isAdmin ? 'var(--violet-700)' : 'var(--indigo-700)',
+                    border: `1px solid ${isAdmin ? 'rgba(124, 58, 237, 0.2)' : 'rgba(79, 70, 229, 0.2)'}`
                   }}
                 >
                   {isAdmin ? 'OPS' : 'PORTAL'}
@@ -306,14 +306,15 @@ export function Sidebar({
                 width: '32px',
                 height: '32px',
                 borderRadius: '8px',
-                background: isAdmin ? 'var(--blue-600)' : 'var(--emerald-700)',
+                background: isAdmin ? 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)' : 'linear-gradient(135deg, #4f46e5 0%, #4338ca 100%)',
                 color: '#fff',
                 fontSize: '0.8rem',
                 fontWeight: 700,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                flexShrink: 0
+                flexShrink: 0,
+                boxShadow: '0 2px 6px rgba(79, 70, 229, 0.25)'
               }}
             >
               {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
@@ -388,16 +389,16 @@ export function Sidebar({
                 gap: '8px',
                 padding: '8px 10px',
                 borderRadius: '8px',
-                background: isAdmin ? 'var(--blue-50)' : 'transparent',
-                border: isAdmin ? '1px solid rgba(37, 99, 235, 0.3)' : '1px solid transparent',
+                background: isAdmin ? 'var(--violet-50)' : 'transparent',
+                border: isAdmin ? '1px solid rgba(124, 58, 237, 0.3)' : '1px solid transparent',
                 textAlign: 'left',
                 marginBottom: '6px'
               }}
             >
-              <Shield size={16} color="var(--blue-600)" />
+              <Shield size={16} color="var(--violet-600)" />
               <div>
                 <p style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Karan Verma</p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--blue-600)' }}>BookLeaf Support Ops Lead (Admin)</p>
+                <p style={{ fontSize: '0.7rem', color: 'var(--violet-600)' }}>BookLeaf Support Ops Lead (Admin)</p>
               </div>
             </button>
 
@@ -419,12 +420,12 @@ export function Sidebar({
                   gap: '8px',
                   padding: '7px 10px',
                   borderRadius: '8px',
-                  background: user?.author_id === p.author_id ? 'var(--emerald-50)' : 'transparent',
-                  border: user?.author_id === p.author_id ? '1px solid rgba(4, 120, 87, 0.25)' : '1px solid transparent',
+                  background: user?.author_id === p.author_id ? 'var(--indigo-50)' : 'transparent',
+                  border: user?.author_id === p.author_id ? '1px solid rgba(79, 70, 229, 0.25)' : '1px solid transparent',
                   textAlign: 'left'
                 }}
               >
-                <User size={14} color={user?.author_id === p.author_id ? 'var(--emerald-700)' : 'var(--text-muted)'} />
+                <User size={14} color={user?.author_id === p.author_id ? 'var(--indigo-600)' : 'var(--text-muted)'} />
                 <div style={{ minWidth: 0, overflow: 'hidden' }}>
                   <p style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
                     {p.name}

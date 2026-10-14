@@ -89,11 +89,11 @@ export function TopBar({ currentView, onTogglePortal }) {
             alignItems: 'center',
             gap: '6px',
             fontSize: '0.74rem',
-            color: isConnected ? 'var(--emerald-700)' : 'var(--text-dim)',
+            color: isConnected ? 'var(--indigo-700)' : 'var(--text-dim)',
             fontWeight: 600,
             padding: '4px 8px',
             borderRadius: '6px',
-            background: isConnected ? 'var(--emerald-50)' : 'var(--bg-subtle)'
+            background: isConnected ? 'var(--indigo-50)' : 'var(--bg-subtle)'
           }}
           title={isConnected ? 'Live WebSocket Connected' : 'Disconnected'}
         >
@@ -102,7 +102,7 @@ export function TopBar({ currentView, onTogglePortal }) {
               width: '7px',
               height: '7px',
               borderRadius: '50%',
-              background: isConnected ? '#059669' : '#94a3b8',
+              background: isConnected ? '#4f46e5' : '#94a3b8',
               display: 'inline-block'
             }}
           />
@@ -128,7 +128,7 @@ export function TopBar({ currentView, onTogglePortal }) {
             }}
             title="Switch demo user account"
           >
-            {isAdmin ? <Shield size={14} color="var(--blue-600)" /> : <User size={14} color="var(--emerald-700)" />}
+            {isAdmin ? <Shield size={14} color="var(--violet-600)" /> : <User size={14} color="var(--indigo-600)" />}
             <span style={{ maxWidth: '140px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {user?.name || 'Switch User'}
             </span>
@@ -171,20 +171,20 @@ export function TopBar({ currentView, onTogglePortal }) {
                   justifyContent: 'space-between',
                   padding: '8px 10px',
                   borderRadius: '6px',
-                  background: isAdmin ? 'var(--blue-50)' : 'transparent',
+                  background: isAdmin ? 'var(--violet-50)' : 'transparent',
                   border: 'none',
                   textAlign: 'left',
                   cursor: 'pointer'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Shield size={14} color="var(--blue-600)" />
+                  <Shield size={14} color="var(--violet-600)" />
                   <div>
                     <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Karan Verma</div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--blue-700)' }}>Support Operations Lead</div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--violet-700)' }}>Support Operations Lead</div>
                   </div>
                 </div>
-                {isAdmin && <Check size={14} color="var(--blue-700)" />}
+                {isAdmin && <Check size={14} color="var(--violet-700)" />}
               </button>
 
               <div style={{ padding: '10px 8px 4px', fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', borderTop: '1px solid var(--border-subtle)', marginTop: '6px' }}>
@@ -206,20 +206,20 @@ export function TopBar({ currentView, onTogglePortal }) {
                       justifyContent: 'space-between',
                       padding: '7px 10px',
                       borderRadius: '6px',
-                      background: isCurrent ? 'var(--emerald-50)' : 'transparent',
+                      background: isCurrent ? 'var(--indigo-50)' : 'transparent',
                       border: 'none',
                       textAlign: 'left',
                       cursor: 'pointer'
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <User size={13} color={isCurrent ? 'var(--emerald-700)' : 'var(--text-muted)'} />
+                      <User size={13} color={isCurrent ? 'var(--indigo-600)' : 'var(--text-muted)'} />
                       <div>
                         <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)' }}>{p.name}</div>
                         <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>{p.author_id} • {p.city}</div>
                       </div>
                     </div>
-                    {isCurrent && <Check size={13} color="var(--emerald-700)" />}
+                    {isCurrent && <Check size={13} color="var(--indigo-600)" />}
                   </button>
                 );
               })}
@@ -238,9 +238,9 @@ export function TopBar({ currentView, onTogglePortal }) {
             borderRadius: '8px',
             fontSize: '0.8rem',
             fontWeight: 600,
-            background: isAdmin ? 'var(--emerald-50)' : 'var(--blue-50)',
-            border: `1px solid ${isAdmin ? 'rgba(4, 120, 87, 0.25)' : 'rgba(37, 99, 235, 0.25)'}`,
-            color: isAdmin ? 'var(--emerald-800)' : 'var(--blue-700)',
+            background: isAdmin ? 'var(--indigo-50)' : 'var(--violet-50)',
+            border: `1px solid ${isAdmin ? 'rgba(79, 70, 229, 0.25)' : 'rgba(124, 58, 237, 0.25)'}`,
+            color: isAdmin ? 'var(--indigo-800)' : 'var(--violet-700)',
             cursor: 'pointer'
           }}
           title={isAdmin ? 'Switch to Author View' : 'Switch to Operations Admin View'}
@@ -255,13 +255,14 @@ export function TopBar({ currentView, onTogglePortal }) {
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: isAdmin ? 'var(--blue-600)' : 'var(--emerald-700)',
+            background: isAdmin ? 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)' : 'linear-gradient(135deg, #4f46e5 0%, #4338ca 100%)',
             color: '#ffffff',
             fontSize: '0.82rem',
             fontWeight: 700,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            boxShadow: '0 2px 6px rgba(79, 70, 229, 0.25)'
           }}
         >
           {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}

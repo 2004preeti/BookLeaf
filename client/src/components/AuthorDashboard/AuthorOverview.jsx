@@ -28,9 +28,9 @@ export function AuthorOverview({ summary, author }) {
               fontWeight: 700,
               padding: '2px 8px',
               borderRadius: '6px',
-              background: 'var(--emerald-50)',
-              color: 'var(--emerald-800)',
-              border: '1px solid rgba(4, 120, 87, 0.2)'
+              background: 'var(--indigo-50)',
+              color: 'var(--indigo-700)',
+              border: '1px solid rgba(79, 70, 229, 0.2)'
             }}>
               Verified Author
             </span>
@@ -47,19 +47,19 @@ export function AuthorOverview({ summary, author }) {
           gap: '10px',
           padding: '8px 16px',
           borderRadius: '10px',
-          background: isThresholdMet ? 'var(--emerald-50)' : 'var(--amber-50)',
-          border: `1px solid ${isThresholdMet ? 'rgba(4, 120, 87, 0.25)' : 'rgba(217, 119, 6, 0.25)'}`
+          background: isThresholdMet ? 'var(--indigo-50)' : 'var(--amber-50)',
+          border: `1px solid ${isThresholdMet ? 'rgba(79, 70, 229, 0.25)' : 'rgba(217, 119, 6, 0.25)'}`
         }}>
           {isThresholdMet ? (
-            <Sparkles size={18} color="var(--emerald-700)" />
+            <Sparkles size={18} color="var(--indigo-600)" />
           ) : (
             <AlertCircle size={18} color="var(--amber-700)" />
           )}
           <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 800, color: isThresholdMet ? 'var(--emerald-800)' : 'var(--amber-800)' }}>
+            <div style={{ fontSize: '0.82rem', fontWeight: 800, color: isThresholdMet ? 'var(--indigo-800)' : 'var(--amber-800)' }}>
               {isThresholdMet ? 'Quarterly Payout Eligible' : 'Rolling Over Next Cycle'}
             </div>
-            <div style={{ fontSize: '0.72rem', color: isThresholdMet ? 'var(--emerald-700)' : 'var(--amber-700)' }}>
+            <div style={{ fontSize: '0.72rem', color: isThresholdMet ? 'var(--indigo-600)' : 'var(--amber-700)' }}>
               {isThresholdMet ? 'Threshold (₹1,000) met • Bank transfer within 45 days' : 'Pending royalties are below ₹1,000 threshold'}
             </div>
           </div>
@@ -74,7 +74,7 @@ export function AuthorOverview({ summary, author }) {
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Total Royalties Earned
             </span>
-            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--emerald-50)', color: 'var(--emerald-700)' }}>
+            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--indigo-50)', color: 'var(--indigo-600)' }}>
               <TrendingUp size={16} />
             </div>
           </div>
@@ -92,7 +92,7 @@ export function AuthorOverview({ summary, author }) {
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Disbursed to Bank
             </span>
-            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--blue-50)', color: 'var(--blue-700)' }}>
+            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--violet-50)', color: 'var(--violet-600)' }}>
               <DollarSign size={16} />
             </div>
           </div>
@@ -117,7 +117,7 @@ export function AuthorOverview({ summary, author }) {
           <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--amber-700)', letterSpacing: '-0.02em', marginBottom: '4px' }}>
             ₹{(summary?.royalty_pending || 0).toLocaleString('en-IN')}
           </div>
-          <div style={{ fontSize: '0.74rem', color: isThresholdMet ? 'var(--emerald-700)' : 'var(--text-muted)', fontWeight: isThresholdMet ? 700 : 500 }}>
+          <div style={{ fontSize: '0.74rem', color: isThresholdMet ? 'var(--indigo-700)' : 'var(--text-muted)', fontWeight: isThresholdMet ? 700 : 500 }}>
             {isThresholdMet ? '✓ Scheduled for active batch disbursement' : 'Rolls over until ₹1,000 threshold'}
           </div>
         </div>
@@ -128,7 +128,7 @@ export function AuthorOverview({ summary, author }) {
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Published Catalog
             </span>
-            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--purple-50)', color: 'var(--purple-700)' }}>
+            <div style={{ padding: '6px', borderRadius: '6px', background: 'var(--indigo-50)', color: 'var(--indigo-600)' }}>
               <BookCheck size={16} />
             </div>
           </div>

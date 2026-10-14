@@ -243,7 +243,7 @@ export function SubmitTicketModal({ isOpen, onClose, books, preselectedBookId, o
                 }}
               />
               {attachment ? (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'var(--emerald-400)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'var(--indigo-600)' }}>
                   <FileText size={18} />
                   <span style={{ fontWeight: 600 }}>{attachment.name}</span>
                   <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>

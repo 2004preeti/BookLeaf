@@ -389,8 +389,8 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
 
           {/* ✨ ENHANCED AI COPILOT RESPONSE CARD ✨ */}
           <div style={{
-            background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
-            border: '1px solid #a7f3d0',
+            background: 'linear-gradient(135deg, #f5f3ff 0%, #eef2ff 100%)',
+            border: '1px solid #c7d2fe',
             borderRadius: 'var(--radius-lg)',
             padding: '20px 22px',
             marginBottom: '26px',
@@ -402,17 +402,17 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                 <div style={{
                   padding: '6px',
                   borderRadius: '8px',
-                  background: 'var(--emerald-100)',
-                  color: 'var(--emerald-800)',
+                  background: 'var(--indigo-100)',
+                  color: 'var(--indigo-800)',
                   display: 'flex'
                 }}>
                   <Sparkles size={17} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--emerald-900)' }}>
+                  <div style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--indigo-900)' }}>
                     BookLeaf AI Copilot Response Draft
                   </div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--emerald-700)', fontWeight: 600 }}>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--indigo-700)', fontWeight: 600 }}>
                     Grounded in official Knowledge Base & Tone Policies
                   </div>
                 </div>
@@ -426,7 +426,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                   style={{ padding: '6px 12px', fontSize: '0.76rem', background: '#ffffff' }}
                   title="Copy draft to clipboard"
                 >
-                  {copiedDraft ? <Check size={13} color="var(--emerald-700)" /> : <Copy size={13} />}
+                  {copiedDraft ? <Check size={13} color="var(--indigo-700)" /> : <Copy size={13} />}
                   <span>{copiedDraft ? 'Copied' : 'Copy'}</span>
                 </button>
 
@@ -443,7 +443,7 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
                 <button
                   onClick={() => setReplyMessage(ticket.ai_draft_response)}
                   className="btn-secondary"
-                  style={{ padding: '6px 14px', fontSize: '0.76rem', borderColor: 'var(--emerald-600)', color: 'var(--emerald-800)', fontWeight: 700, background: '#ffffff' }}
+                  style={{ padding: '6px 14px', fontSize: '0.76rem', borderColor: 'var(--indigo-600)', color: 'var(--indigo-800)', fontWeight: 700, background: '#ffffff' }}
                   title="Insert this draft into reply editor"
                 >
                   <CornerDownRight size={13} />
@@ -467,15 +467,15 @@ export function TicketWorkbench({ ticketId, onTicketUpdated }) {
             {ticket.ai_reasoning && (
               <div style={{
                 fontSize: '0.8rem',
-                color: 'var(--emerald-900)',
+                color: 'var(--indigo-900)',
                 marginBottom: '12px',
                 padding: '10px 14px',
                 background: 'rgba(255, 255, 255, 0.85)',
-                border: '1px solid #a7f3d0',
+                border: '1px solid #c7d2fe',
                 borderRadius: '8px',
                 lineHeight: 1.45
               }}>
-                <strong style={{ color: 'var(--emerald-800)' }}>Policy Match & Reasoning:</strong> {ticket.ai_reasoning}
+                <strong style={{ color: 'var(--indigo-800)' }}>Policy Match & Reasoning:</strong> {ticket.ai_reasoning}
               </div>
             )}
 

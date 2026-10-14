@@ -186,14 +186,14 @@ export function MyTicketsView({ onOpenSubmitTicket }) {
                       borderRadius: 'var(--radius-lg)',
                       marginBottom: '10px',
                       cursor: 'pointer',
-                      border: `1px solid ${isSelected ? 'var(--emerald-600)' : 'var(--border-subtle)'}`,
-                      background: isSelected ? 'var(--emerald-50)' : '#ffffff',
+                      border: `1px solid ${isSelected ? 'var(--indigo-600)' : 'var(--border-subtle)'}`,
+                      background: isSelected ? 'var(--indigo-50)' : '#ffffff',
                       boxShadow: isSelected ? 'var(--shadow-sm)' : 'none',
                       transition: 'all 0.15s ease'
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--emerald-700)', fontWeight: 800 }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--indigo-700)', fontWeight: 800 }}>
                         {t.ticket_number}
                       </span>
                       <span className={`badge ${getStatusBadge(t.status)}`} style={{ fontSize: '0.7rem' }}>
@@ -230,7 +230,7 @@ export function MyTicketsView({ onOpenSubmitTicket }) {
               }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--emerald-700)', fontWeight: 800, fontSize: '0.95rem' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--indigo-700)', fontWeight: 800, fontSize: '0.95rem' }}>
                       {activeTicketData.ticket.ticket_number}
                     </span>
                     <span className={`badge ${getStatusBadge(activeTicketData.ticket.status)}`}>
@@ -246,11 +246,11 @@ export function MyTicketsView({ onOpenSubmitTicket }) {
                   </h3>
 
                   <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-                    Book Reference: <strong style={{ color: 'var(--emerald-700)' }}>
+                    Book Reference: <strong style={{ color: 'var(--indigo-700)' }}>
                       {activeTicketData.book ? `${activeTicketData.book.title} (${activeTicketData.book.book_id})` : 'General / Account Level'}
                     </strong>
                     {activeTicketData.ticket.attachment_name && (
-                      <span style={{ marginLeft: '14px', display: 'inline-flex', alignItems: 'center', gap: '5px', color: 'var(--blue-700)', fontWeight: 700 }}>
+                      <span style={{ marginLeft: '14px', display: 'inline-flex', alignItems: 'center', gap: '5px', color: 'var(--indigo-700)', fontWeight: 700 }}>
                         <Paperclip size={13} /> {activeTicketData.ticket.attachment_name}
                       </span>
                     )}
@@ -314,8 +314,8 @@ export function MyTicketsView({ onOpenSubmitTicket }) {
                       style={{
                         alignSelf: isAdmin ? 'flex-start' : 'flex-end',
                         maxWidth: '85%',
-                        background: isAdmin ? 'var(--bg-subtle)' : 'var(--emerald-50)',
-                        border: `1px solid ${isAdmin ? 'var(--border-subtle)' : '#a7f3d0'}`,
+                        background: isAdmin ? 'var(--bg-subtle)' : 'var(--indigo-50)',
+                        border: `1px solid ${isAdmin ? 'var(--border-subtle)' : '#c7d2fe'}`,
                         borderRadius: 'var(--radius-lg)',
                         padding: '18px 22px',
                         boxShadow: 'var(--shadow-sm)'
@@ -328,8 +328,8 @@ export function MyTicketsView({ onOpenSubmitTicket }) {
                             width: '26px',
                             height: '26px',
                             borderRadius: '50%',
-                            background: 'var(--blue-100)',
-                            color: 'var(--blue-700)',
+                            background: 'var(--violet-100)',
+                            color: 'var(--violet-700)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'
@@ -341,8 +341,8 @@ export function MyTicketsView({ onOpenSubmitTicket }) {
                             width: '26px',
                             height: '26px',
                             borderRadius: '50%',
-                            background: 'var(--emerald-100)',
-                            color: 'var(--emerald-800)',
+                            background: 'var(--indigo-100)',
+                            color: 'var(--indigo-800)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -354,7 +354,7 @@ export function MyTicketsView({ onOpenSubmitTicket }) {
                         )}
 
                         <div>
-                          <span style={{ fontSize: '0.84rem', fontWeight: 800, color: isAdmin ? 'var(--blue-700)' : 'var(--emerald-900)' }}>
+                          <span style={{ fontSize: '0.84rem', fontWeight: 800, color: isAdmin ? 'var(--violet-700)' : 'var(--indigo-900)' }}>
                             {isAdmin ? `${m.sender_name} (BookLeaf Operations)` : m.sender_name}
                           </span>
                           <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginLeft: '8px' }}>

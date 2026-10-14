@@ -57,11 +57,11 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
                     <span style={{
                       fontSize: '0.72rem',
                       fontFamily: 'var(--font-mono)',
-                      background: 'var(--emerald-50)',
-                      border: '1px solid rgba(4, 120, 87, 0.2)',
+                      background: 'var(--indigo-50)',
+                      border: '1px solid rgba(79, 70, 229, 0.2)',
                       padding: '2px 6px',
                       borderRadius: '4px',
-                      color: 'var(--emerald-700)',
+                      color: 'var(--indigo-700)',
                       fontWeight: 700
                     }}>
                       {book.book_id}
