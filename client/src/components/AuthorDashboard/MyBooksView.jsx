@@ -41,7 +41,15 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
           const isInProduction = !isLive;
 
           return (
-            <div key={book.book_id} className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div
+              key={book.book_id}
+              className="glass-card"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                borderTop: isLive ? '3px solid #4f46e5' : '3px solid #7c3aed'
+              }}
+            >
               {/* Header */}
               <div style={{
                 padding: '18px 20px',
@@ -153,13 +161,13 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
                     </div>
                     <div>
                       <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>Royalty Paid</div>
-                      <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--blue-700)', marginTop: '2px' }}>
+                      <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--violet-700)', marginTop: '2px' }}>
                         ₹{book.royalty_paid.toLocaleString('en-IN')}
                       </div>
                     </div>
                     <div>
                       <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>Pending</div>
-                      <div style={{ fontSize: '1.1rem', fontWeight: 800, color: book.royalty_pending > 0 ? 'var(--amber-700)' : 'var(--emerald-700)', marginTop: '2px' }}>
+                      <div style={{ fontSize: '1.1rem', fontWeight: 800, color: book.royalty_pending > 0 ? 'var(--amber-700)' : 'var(--indigo-700)', marginTop: '2px' }}>
                         ₹{book.royalty_pending.toLocaleString('en-IN')}
                       </div>
                     </div>
@@ -213,7 +221,7 @@ export function MyBooksView({ books, onOpenSubmitTicket }) {
                   className="btn-secondary"
                   style={{ fontSize: '0.8rem', padding: '6px 14px' }}
                 >
-                  <MessageSquarePlus size={14} color="var(--emerald-700)" />
+                  <MessageSquarePlus size={14} color="var(--indigo-600)" />
                   <span>Raise Support Ticket</span>
                 </button>
               </div>

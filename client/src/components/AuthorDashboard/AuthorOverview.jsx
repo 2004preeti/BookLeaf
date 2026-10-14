@@ -69,7 +69,7 @@ export function AuthorOverview({ summary, author }) {
       {/* 4 Crisp Metric Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '16px' }}>
         {/* Total Earned */}
-        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+        <div className="metric-card" style={{ borderTop: '3px solid #4f46e5' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Total Royalties Earned
@@ -87,7 +87,7 @@ export function AuthorOverview({ summary, author }) {
         </div>
 
         {/* Royalty Paid */}
-        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+        <div className="metric-card" style={{ borderTop: '3px solid #7c3aed' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Disbursed to Bank
@@ -105,7 +105,7 @@ export function AuthorOverview({ summary, author }) {
         </div>
 
         {/* Royalty Pending */}
-        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+        <div className="metric-card" style={{ borderTop: '3px solid #d97706' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Pending Royalties
@@ -123,7 +123,7 @@ export function AuthorOverview({ summary, author }) {
         </div>
 
         {/* Catalog & Copies Sold */}
-        <div className="glass-card" style={{ padding: '20px', background: '#ffffff' }}>
+        <div className="metric-card" style={{ borderTop: '3px solid #6366f1' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Published Catalog
