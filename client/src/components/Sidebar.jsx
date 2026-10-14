@@ -42,7 +42,9 @@ export function Sidebar({
         width: isCollapsed ? '76px' : '260px',
         minWidth: isCollapsed ? '76px' : '260px',
         transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-        background: '#ffffff',
+        background: 'rgba(255, 255, 255, 0.94)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         borderRight: '1px solid var(--border-subtle)',
         display: 'flex',
         flexDirection: 'column',
@@ -184,8 +186,10 @@ export function Sidebar({
               className={`sidebar-nav-item ${currentView === 'overview' ? 'active' : ''}`}
               title="Overview & Royalties"
             >
-              <LayoutDashboard size={18} />
-              {!isCollapsed && <span>Overview & Royalties</span>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <LayoutDashboard size={18} />
+                {!isCollapsed && <span>Overview & Royalties</span>}
+              </div>
             </button>
 
             <button
@@ -193,8 +197,22 @@ export function Sidebar({
               className={`sidebar-nav-item ${currentView === 'books' ? 'active' : ''}`}
               title="My Published Books"
             >
-              <BookOpen size={18} />
-              {!isCollapsed && <span>My Books</span>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <BookOpen size={18} />
+                {!isCollapsed && <span>My Books</span>}
+              </div>
+              {!isCollapsed && (
+                <span style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  padding: '2px 7px',
+                  borderRadius: '9999px',
+                  background: currentView === 'books' ? 'rgba(79, 70, 229, 0.15)' : 'var(--bg-subtle)',
+                  color: currentView === 'books' ? 'var(--indigo-700)' : 'var(--text-muted)'
+                }}>
+                  Catalog
+                </span>
+              )}
             </button>
 
             <button
@@ -202,8 +220,22 @@ export function Sidebar({
               className={`sidebar-nav-item ${currentView === 'tickets' ? 'active' : ''}`}
               title="Support Tickets"
             >
-              <MessageSquare size={18} />
-              {!isCollapsed && <span>Support Tickets</span>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <MessageSquare size={18} />
+                {!isCollapsed && <span>Support Tickets</span>}
+              </div>
+              {!isCollapsed && (
+                <span style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  padding: '2px 7px',
+                  borderRadius: '9999px',
+                  background: currentView === 'tickets' ? 'rgba(79, 70, 229, 0.15)' : 'var(--bg-subtle)',
+                  color: currentView === 'tickets' ? 'var(--indigo-700)' : 'var(--text-muted)'
+                }}>
+                  Live
+                </span>
+              )}
             </button>
 
             {/* Quick Raise Ticket Action */}
@@ -235,8 +267,23 @@ export function Sidebar({
               className={`sidebar-nav-item ${currentView === 'queue' ? 'active' : ''}`}
               title="Ticket Triage Queue"
             >
-              <Inbox size={18} />
-              {!isCollapsed && <span>Triage Queue</span>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Inbox size={18} />
+                {!isCollapsed && <span>Triage Queue</span>}
+              </div>
+              {!isCollapsed && (
+                <span style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  padding: '2px 7px',
+                  borderRadius: '9999px',
+                  background: 'var(--amber-50)',
+                  color: 'var(--amber-700)',
+                  border: '1px solid rgba(217, 119, 6, 0.2)'
+                }}>
+                  Active
+                </span>
+              )}
             </button>
 
             <button
@@ -244,8 +291,23 @@ export function Sidebar({
               className={`sidebar-nav-item ${currentView === 'workbench' ? 'active' : ''}`}
               title="Ticket Workbench"
             >
-              <Layers size={18} />
-              {!isCollapsed && <span>Ticket Workbench</span>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Layers size={18} />
+                {!isCollapsed && <span>Workbench</span>}
+              </div>
+              {!isCollapsed && (
+                <span style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  padding: '2px 7px',
+                  borderRadius: '9999px',
+                  background: 'var(--violet-50)',
+                  color: 'var(--violet-700)',
+                  border: '1px solid rgba(124, 58, 237, 0.2)'
+                }}>
+                  AI Copilot
+                </span>
+              )}
             </button>
 
             <button
@@ -253,8 +315,10 @@ export function Sidebar({
               className={`sidebar-nav-item ${currentView === 'metrics' ? 'active' : ''}`}
               title="Operations Metrics"
             >
-              <BarChart3 size={18} />
-              {!isCollapsed && <span>Ops Metrics</span>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <BarChart3 size={18} />
+                {!isCollapsed && <span>Ops Metrics</span>}
+              </div>
             </button>
           </>
         )}
