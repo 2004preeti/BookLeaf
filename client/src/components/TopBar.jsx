@@ -46,7 +46,9 @@ export function TopBar({ currentView, onTogglePortal }) {
     <header
       style={{
         height: '60px',
-        background: '#ffffff',
+        background: 'rgba(255, 255, 255, 0.85)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--border-subtle)',
         display: 'flex',
         alignItems: 'center',

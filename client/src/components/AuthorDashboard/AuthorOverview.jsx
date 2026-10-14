@@ -7,60 +7,111 @@ export function AuthorOverview({ summary, author }) {
 
   return (
     <div style={{ marginBottom: '28px' }}>
-      {/* Modern Clean Header Row */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: '24px',
-        flexWrap: 'wrap',
-        gap: '14px',
-        paddingBottom: '18px',
-        borderBottom: '1px solid var(--border-subtle)'
-      }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-              Welcome back, {author?.name}
-            </h2>
-            <span style={{
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              padding: '2px 8px',
-              borderRadius: '6px',
-              background: 'var(--indigo-50)',
-              color: 'var(--indigo-700)',
-              border: '1px solid rgba(79, 70, 229, 0.2)'
-            }}>
-              Verified Author
-            </span>
-          </div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-            Author ID: <strong style={{ color: 'var(--text-main)' }}>{author?.author_id}</strong> • Member since {author?.joined_date} • {author?.city}
-          </p>
-        </div>
-
-        {/* Payout Status Callout */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '8px 16px',
-          borderRadius: '10px',
-          background: isThresholdMet ? 'var(--indigo-50)' : 'var(--amber-50)',
-          border: `1px solid ${isThresholdMet ? 'rgba(79, 70, 229, 0.25)' : 'rgba(217, 119, 6, 0.25)'}`
-        }}>
-          {isThresholdMet ? (
-            <Sparkles size={18} color="var(--indigo-600)" />
-          ) : (
-            <AlertCircle size={18} color="var(--amber-700)" />
-          )}
-          <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 800, color: isThresholdMet ? 'var(--indigo-800)' : 'var(--amber-800)' }}>
-              {isThresholdMet ? 'Quarterly Payout Eligible' : 'Rolling Over Next Cycle'}
+      {/* Modern Author Hero Card */}
+      <div
+        className="glass-card fade-in-up"
+        style={{
+          padding: '24px 28px',
+          marginBottom: '26px',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%)',
+          border: '1px solid var(--border-subtle)',
+          borderRadius: 'var(--radius-xl)',
+          boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.05)'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
+          {/* Left: Author Identity */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+            <div
+              style={{
+                width: '54px',
+                height: '54px',
+                borderRadius: '16px',
+                background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+                color: '#ffffff',
+                fontSize: '1.35rem',
+                fontWeight: 800,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 14px rgba(79, 70, 229, 0.28)',
+                flexShrink: 0
+              }}
+            >
+              {author?.name ? author.name.charAt(0).toUpperCase() : 'A'}
             </div>
-            <div style={{ fontSize: '0.72rem', color: isThresholdMet ? 'var(--indigo-600)' : 'var(--amber-700)' }}>
-              {isThresholdMet ? 'Threshold (₹1,000) met • Bank transfer within 45 days' : 'Pending royalties are below ₹1,000 threshold'}
+
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                <h2 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
+                  Welcome back, {author?.name}
+                </h2>
+                <span style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  padding: '3px 9px',
+                  borderRadius: '9999px',
+                  background: 'var(--indigo-50)',
+                  color: 'var(--indigo-700)',
+                  border: '1px solid rgba(79, 70, 229, 0.25)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}>
+                  <Sparkles size={11} color="var(--indigo-600)" />
+                  Verified Author
+                </span>
+                <span style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  padding: '3px 8px',
+                  borderRadius: '9999px',
+                  background: 'var(--violet-50)',
+                  color: 'var(--violet-700)',
+                  border: '1px solid rgba(124, 58, 237, 0.2)'
+                }}>
+                  80/20 Profit Split
+                </span>
+              </div>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem' }}>
+                Author ID: <strong style={{ color: 'var(--text-main)', fontFamily: 'var(--font-mono)' }}>{author?.author_id}</strong> • Member since {author?.joined_date} • {author?.city}
+              </p>
+            </div>
+          </div>
+
+          {/* Right: Payout Threshold Status Pill */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 18px',
+            borderRadius: 'var(--radius-lg)',
+            background: isThresholdMet ? 'var(--indigo-50)' : 'var(--amber-50)',
+            border: `1px solid ${isThresholdMet ? 'rgba(79, 70, 229, 0.25)' : 'rgba(217, 119, 6, 0.25)'}`
+          }}>
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '10px',
+              background: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: 'var(--shadow-sm)'
+            }}>
+              {isThresholdMet ? (
+                <Sparkles size={18} color="var(--indigo-600)" />
+              ) : (
+                <AlertCircle size={18} color="var(--amber-700)" />
+              )}
+            </div>
+            <div>
+              <div style={{ fontSize: '0.84rem', fontWeight: 800, color: isThresholdMet ? 'var(--indigo-900)' : 'var(--amber-900)' }}>
+                {isThresholdMet ? 'Quarterly Payout Eligible' : 'Rolling Over Next Cycle'}
+              </div>
+              <div style={{ fontSize: '0.74rem', color: isThresholdMet ? 'var(--indigo-700)' : 'var(--amber-700)' }}>
+                {isThresholdMet ? 'Threshold (₹1,000) met • Bank transfer within 45 days' : 'Pending royalties are below ₹1,000 threshold'}
+              </div>
             </div>
           </div>
         </div>
